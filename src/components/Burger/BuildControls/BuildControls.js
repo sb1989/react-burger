@@ -10,8 +10,11 @@ const controlLabel = [
 ]
 
 const buildControls = (props)=>{
+    const formatter = new Intl.NumberFormat('en-SG', { style: 'currency', currency: 'SGD' })
+
     return(
         <div className={classes.BuildControls}>
+            <p>Current Price: <strong>{formatter.format(props.price)}</strong></p>
             {controlLabel.map((lblItem) =>{return <BuildControl 
             key={lblItem.label}
             label={lblItem.label} 
