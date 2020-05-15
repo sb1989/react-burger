@@ -15,7 +15,9 @@ const buildControls = (props)=>{
             {controlLabel.map((lblItem) =>{return <BuildControl 
             key={lblItem.label}
             label={lblItem.label} 
-            added={()=>props.ingredientAdded(lblItem.type)}/>})}
+            added={()=>props.ingredientAdded(lblItem.type)}
+            removed={()=>props.ingredientRemoved(lblItem.type)}
+            disabled={props.disabled[lblItem.type]}/>})}
         </div>
     )
 }

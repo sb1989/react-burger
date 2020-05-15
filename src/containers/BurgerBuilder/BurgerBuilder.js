@@ -28,23 +28,53 @@ class BurgerBuilder extends Component{
         }
 
         updatedIngredients[type] = updatedCount
+
+        const prevPrice = this.state.totalPrice;
+        const updatedPrice = prevPrice + INGREDIENT_PRICES[type]
         this.setState({
-                ingredients: updatedIngredients
+                ingredients: updatedIngredients,
+                totalPrice: updatedPrice
             }
         ) 
-        
-        this.setState(
-                (prevState, props)=>{ return {
-                    totalPrice: prevState.totalPrice + INGREDIENT_PRICES[type]
-                }
-            }
-        )
     }
+
+    removeIngredientHandler = (type) => {
+        const prevCount = this.state.ingredients[type]
+        if(prevCount <=0 ){
+            return
+        }
+
+        const updatedCount = prevCount - 1
+        const updatedIngredients = {
+            ... this.state.ingredients
+        }
+        updatedIngredients[type] = updatedCount
+
+        const prevPrice = this.state.totalPrice;
+        const updatedPrice = prevPrice + INGREDIENT_PRICES[type]
+        this.setState({
+                ingredients: updatedIngredients,
+                totalPrice: updatedPrice
+            }
+        ) 
+    }
+
     render(){
+        const disabledProperties = {...this.state.ingredients}
+        for(let key in disabledProperties){
+            console.log('key value in disbaled: ' + key)
+            disabledProperties[key] = disabledProperties[key] <= 0
+        }
         return (
             <Auxiliary>
                 <Burger ingredients={this.state.ingredients}/>
-                <BuildControls ingredientAdded={this.addIngredientHandler}/>
+                <BuildControls 
+                ingredientAdded={this.addIngredientHandler} 
+                ingredientRemoved={this.removeIngredientHandler}
+                disabled={disabledProperties}
+                price={this.state.totalPrice}
+                />
+                {console.log(this.state.totalPrice)}
             </Auxiliary>
         )
     }
