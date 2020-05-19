@@ -21,6 +21,7 @@ const buildControls = (props)=>{
             added={()=>props.ingredientAdded(lblItem.type)}
             removed={()=>props.ingredientRemoved(lblItem.type)}
             disabled={props.disabled[lblItem.type]}/>})}
+            <button disabled={!props.orderable} className={classes.OrderButton}>ORDER NOW</button>
         </div>
     )
 }

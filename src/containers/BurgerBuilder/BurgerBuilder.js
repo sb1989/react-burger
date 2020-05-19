@@ -17,7 +17,18 @@ class BurgerBuilder extends Component{
             cheese:0,
             meat:0
         },
-        totalPrice: 4
+        totalPrice: 4,
+        orderable: false
+    }
+
+    updateOrderable(ingredients){
+        const sum = Object.keys(ingredients).map(ingredientKey => {return ingredients[ingredientKey]}).reduce(
+            (sum, element) => {return sum + element}, 0
+        )
+        this.setState(
+            { orderable: sum > 0}
+        )
+        console.log('ingredient sum: ' + sum)
     }
 
     addIngredientHandler = (type) => {
@@ -36,6 +47,7 @@ class BurgerBuilder extends Component{
                 totalPrice: updatedPrice
             }
         ) 
+        this.updateOrderable(updatedIngredients)
     }
 
     removeIngredientHandler = (type) => {
@@ -57,6 +69,7 @@ class BurgerBuilder extends Component{
                 totalPrice: updatedPrice
             }
         ) 
+        this.updateOrderable(updatedIngredients)
     }
 
     render(){
@@ -73,6 +86,7 @@ class BurgerBuilder extends Component{
                 ingredientRemoved={this.removeIngredientHandler}
                 disabled={disabledProperties}
                 price={this.state.totalPrice}
+                orderable={this.state.orderable}
                 />
                 {console.log(this.state.totalPrice)}
             </Auxiliary>
